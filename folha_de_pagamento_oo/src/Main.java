@@ -4,16 +4,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String [] args) {
         Scanner input = new Scanner(System.in);
-        ArrayList<Employee> employees = new ArrayList();
+        ArrayList<Employee> employees = new ArrayList<>();
         Calendario calendario = new Calendario();
         Employee employeeAux = new Employee();
         Hourly hourlyAux = new Hourly();
         Comissioned comissionedAux = new Comissioned();
         Syndicate syndicateAux = employeeAux.getSindycate();
         PaymentSchedule paymentScheduleAux = new PaymentSchedule();
-        ArrayList<PaymentSchedule> paymentSchedule = new ArrayList();
-        //private undoRedo = new UndoRedo();
-        //private payroll = new Payroll();
+        ArrayList<PaymentSchedule> paymentSchedule = new ArrayList<>();
+        //UndoRedo undoRedo = new UndoRedo();
+        Payroll payroll = new Payroll();
 
         // initialize the payment schedule
         paymentScheduleAux.setDayWeekly(5);
@@ -30,7 +30,7 @@ public class Main {
         System.out.println("Digite o dia da semana atual:");
         System.out.printf("(1) - Segunda\n(2) - Terça\n(3) - Quarta\n(4) - Quinta\n(5) - Sexta\n(6) - Sábado\n(7) - Domingo\n");
         int dayOfWeek = input.nextInt();
-        calendario.setDay_of_week(dayOfWeek);
+        calendario.setDayOfWeek(dayOfWeek);
 
         System.out.println("Digite o dia atual");
         int day = input.nextInt();
@@ -46,7 +46,7 @@ public class Main {
 
         calendario.initializeCalendary(initialDay);
 
-        System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
+        System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Undo/Redo\n(8) - Rodar a folha de pagamento\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
         int option = input.nextInt();
 
         while(option > 0 && option <= 10) {
@@ -56,20 +56,29 @@ public class Main {
                 int type = input.nextInt();
                 if(type == 1) {
                     Assalaried employee = new Assalaried();
-                    employee.addEmployee(employees);
+                    employee.addEmployee(employees, paymentSchedule.get(0));
+                    employee.setActualPayment(employee.getSalary());
+                    employee.setScheduleOption(1);
+                    employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
                     employees.add(employee);
                 }
                 else if(type == 2) {
                     Comissioned employee = new Comissioned();
-                    employee.addEmployee(employees);
+                    employee.addEmployee(employees, paymentSchedule.get(0));
+                    employee.setActualPayment(employee.getSalary() / 2);
+                    employee.setScheduleOption(2);
                     System.out.println("Digite a comissão do funcionário adicionado:");
                     double commission = input.nextDouble();
                     employee.setCommission(commission);
+                    employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
                     employees.add(employee);
                 }
                 else if(type == 3) {
                     Hourly employee = new Hourly();
-                    employee.addEmployee(employees);
+                    employee.addEmployee(employees, paymentSchedule.get(0));
+                    employee.setActualPayment(0);
+                    employee.setScheduleOption(3);
+                    employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
                     employees.add(employee);
                 }
                 System.out.println("Empregado adicionado com sucesso!");
@@ -88,10 +97,20 @@ public class Main {
                 syndicateAux.addServiceTax(employees);
             }
             else if(option == 6) {
-                //employeeAux.changeEmployeeData(employees);
+                employeeAux.changeEmployeeData(employees, calendario);
+            }
+            else if(option == 7) {
+
+            }
+            else if(option == 8) {
+                payroll.payroll(employees, calendario);
+                calendario.nextDayOfWeek(calendario.getDayOfWeek());
+                calendario.nextDay(calendario.getDay(), calendario.getMonth());
+                calendario.nextMonth(calendario.getDay(), calendario.getMonth());
+                calendario.nextYear(calendario.getDay(), calendario.getMonth(), calendario.getYear());
             }
             else if(option == 9) {
-                employeeAux.allEmployees();
+                employeeAux.allEmployees(employees);
                 paymentScheduleAux.joinPaymentSchedule(employees, paymentSchedule);
             }
             else if(option == 10) {
@@ -100,12 +119,9 @@ public class Main {
                 System.out.println("Agenda adicionada com sucesso!");
             }
 
-            System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
+            System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Undo/Redo\n(8) - Rodar a folha de pagamento\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
             option = input.nextInt();
         }
-
-
-
 
         for(Employee e : employees) {
             if(e instanceof Assalaried) {
@@ -113,7 +129,7 @@ public class Main {
             }
             else if(e instanceof Comissioned) {
                 System.out.println("Type: Comissioned");
-                System.out.printf("Commission: %.2f", ((Comissioned) e).getCommission());
+                System.out.printf("Commission: %.2f\n", ((Comissioned) e).getCommission());
             }
             else if(e instanceof Hourly) {
                 System.out.println("Type: Hourly");

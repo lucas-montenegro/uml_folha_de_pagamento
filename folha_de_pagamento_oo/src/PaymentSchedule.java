@@ -47,6 +47,12 @@ public class PaymentSchedule {
                     option = input.nextInt();
                     if(option == 1) {
                         e.setPaymentSchedule(k);
+                        System.out.println("Qual o tipo de agenda que o funcionário irá seguir?");
+                        System.out.printf("(1) - Mensal\n(2) - Bi-semanal\n(3) - Semanal\n");
+                        option = input.nextInt();
+                        if(option == 1) e.setScheduleOption(1);
+                        else if(option == 2) e.setScheduleOption(2);
+                        else if(option == 3) e.setScheduleOption(3);
                         code = 0;
                         break;
                     }

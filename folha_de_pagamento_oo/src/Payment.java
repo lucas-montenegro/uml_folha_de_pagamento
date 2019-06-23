@@ -1,4 +1,4 @@
 public interface Payment {
     void updateActualPayment(double money);
-    //void calculateNextPayment(PaymentSchedule, Calendario);
+    void calculateNextPayment(PaymentSchedule paymentSchedule, Calendario calendario);
 }

@@ -46,10 +46,12 @@ public class Syndicate {
 
     public void addServiceTax(ArrayList<Employee> employees) {
         System.out.println("Digite o id do funcionário que deseja lançar a taxa de serviço:");
+        Employee employee = new Employee();
         int idToVerify = input.nextInt();
         int code = 0;
         for(Employee e : employees) {
             if(e.getId() == idToVerify) {
+                employee = e;
                 code = 1;
                 break;
             }
@@ -58,7 +60,7 @@ public class Syndicate {
         else {
             System.out.println("Digite a taxa de serviço do funcionário:");
             double serviceTax = input.nextDouble();
-            setServiceTax(serviceTax);
+            employee.getSindycate().setServiceTax(serviceTax);
             System.out.println("Taxa de serviço adicionada com sucesso!");
         }
     }

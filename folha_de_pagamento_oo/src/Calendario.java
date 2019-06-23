@@ -1,6 +1,6 @@
 public class Calendario {
     private int initialDay;
-    private int day_of_week;
+    private int dayOfWeek;
     private int day;
     private int month;
     private int year;
@@ -14,12 +14,12 @@ public class Calendario {
         this.initialDay = initialDay;
     }
 
-    public int getDay_of_week() {
-        return day_of_week;
+    public int getDayOfWeek() {
+        return dayOfWeek;
     }
 
-    public void setDay_of_week(int day_of_week) {
-        this.day_of_week = day_of_week;
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
     }
 
     public int getDay() {
@@ -54,20 +54,28 @@ public class Calendario {
         this.calendary = calendary;
     }
 
-    public int nextDay(int day, int month) {
-        if(++day == 32 && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)) return 1;
-        else if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) return 1;
-        else if(day == 29 && month == 2) return 1;
-        else return day;
-    }
-    public int nextMonth(int day, int month) {
-        if(day == 1) month++;
-        return month;
+    public void nextDayOfWeek(int dayOfWeek) {
+        setDayOfWeek(dayOfWeek + 1);
     }
 
-    public int nextYear(int day, int month, int year) {
-        if(day == 1 && month == 1) year++;
-        return year;
+    public void nextDay(int day, int month) {
+        day++;
+        if(day == 32 && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)) setDay(1);
+        else if(day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) setDay(1);
+        else if(day == 29 && month == 2) setDay(1);
+        else setDay(day);
+    }
+    public void nextMonth(int day, int month) {
+        if(day == 1) setMonth(month + 1);
+        else setMonth(month);
+    }
+
+    public void nextYear(int day, int month, int year) {
+        if(day == 1 && month == 1) {
+            setYear(year + 1);
+            initializeCalendary(getInitialDay());
+        }
+        else setYear(year);
     }
 
     public void initializeCalendary(int initialDay) {
