@@ -12,8 +12,11 @@ public class Main {
         Syndicate syndicateAux = employeeAux.getSindycate();
         PaymentSchedule paymentScheduleAux = new PaymentSchedule();
         ArrayList<PaymentSchedule> paymentSchedule = new ArrayList<>();
-        //UndoRedo undoRedo = new UndoRedo();
+        UndoRedo undoRedo = new UndoRedo();
         Payroll payroll = new Payroll();
+
+        // initialize undo stack
+        undoRedo.addUndo(employees);
 
         // initialize the payment schedule
         paymentScheduleAux.setDayWeekly(5);
@@ -46,7 +49,7 @@ public class Main {
 
         calendario.initializeCalendary(initialDay);
 
-        System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Undo/Redo\n(8) - Rodar a folha de pagamento\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
+        System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Rodar a folha de pagamento\n(8) - Undo/Redo\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
         int option = input.nextInt();
 
         while(option > 0 && option <= 10) {
@@ -81,33 +84,47 @@ public class Main {
                     employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
                     employees.add(employee);
                 }
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
                 System.out.println("Empregado adicionado com sucesso!");
             }
             else if(option == 2) {
                 employeeAux.removeEmployee(employees);
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
             }
             else if(option == 3) {
                 hourlyAux.timecard(employees);
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
             }
             else if(option == 4) {
                 comissionedAux.addSale(employees);
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
             }
             else if(option == 5) {
                 employeeAux.allEmployees(employees);
                 syndicateAux.addServiceTax(employees);
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
             }
             else if(option == 6) {
                 employeeAux.changeEmployeeData(employees, calendario);
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
             }
             else if(option == 7) {
-
-            }
-            else if(option == 8) {
                 payroll.payroll(employees, calendario);
                 calendario.nextDayOfWeek(calendario.getDayOfWeek());
                 calendario.nextDay(calendario.getDay(), calendario.getMonth());
                 calendario.nextMonth(calendario.getDay(), calendario.getMonth());
                 calendario.nextYear(calendario.getDay(), calendario.getMonth(), calendario.getYear());
+                undoRedo.clearRedo();
+                undoRedo.addUndo(employees);
+            }
+            else if(option == 8) {
+                undoRedo.doUndoRedo(employees);
             }
             else if(option == 9) {
                 employeeAux.allEmployees(employees);
@@ -119,7 +136,7 @@ public class Main {
                 System.out.println("Agenda adicionada com sucesso!");
             }
 
-            System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Undo/Redo\n(8) - Rodar a folha de pagamento\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
+            System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Rodar a folha de pagamento\n(8) - Undo/Redo\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
             option = input.nextInt();
         }
 

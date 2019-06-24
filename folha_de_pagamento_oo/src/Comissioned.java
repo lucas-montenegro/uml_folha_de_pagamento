@@ -51,7 +51,7 @@ public class Comissioned extends Employee implements Payment{
                     daysToPayment = (calendary[month - 1][2] - day) + dayOfPayment;
                 }
             } else {
-                int auxDayOfWeek = dayOfWeek + (31 - day) + 1;
+                int auxDayOfWeek = (dayOfWeek + (31 - day) + 1) % 7;
                 calendario.initializeCalendary(auxDayOfWeek);
                 if (dayOfPayment == -1) {
                     daysToPayment = (31 - day) + calendary[1][1];
