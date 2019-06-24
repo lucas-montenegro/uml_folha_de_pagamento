@@ -58,6 +58,16 @@ public class Calendario {
         setDayOfWeek(dayOfWeek + 1);
     }
 
+    public void copy(Calendario oldCalendario, Calendario newCalendario) {
+        newCalendario.setInitialDay(oldCalendario.getInitialDay());
+        newCalendario.setDayOfWeek(oldCalendario.getDayOfWeek());
+        newCalendario.setDay(oldCalendario.getDay());
+        newCalendario.setMonth(oldCalendario.getMonth());
+        newCalendario.setYear(oldCalendario.getYear());
+        newCalendario.setCalendary(oldCalendario.getCalendary());
+    }
+
+
     public void nextDay(int day, int month) {
         day++;
         if(day == 32 && (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)) setDay(1);

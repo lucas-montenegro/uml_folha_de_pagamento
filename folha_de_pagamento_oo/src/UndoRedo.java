@@ -3,24 +3,42 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class UndoRedo {
-    private Stack<ArrayList<Employee>> undo = new Stack<>();
-    private Stack<ArrayList<Employee>> redo = new Stack<>();
+    private Stack<ArrayList<Employee>> undoEmployee = new Stack<>();
+    private Stack<ArrayList<Employee>> redoEmployee = new Stack<>();
+    private Stack<Calendario> undoCalendario = new Stack<>();
+    private Stack<Calendario> redoCalendario = new Stack<>();
     Scanner input = new Scanner(System.in);
 
-    public Stack<ArrayList<Employee>> getUndo() {
-        return undo;
+    public Stack<ArrayList<Employee>> getUndoEmployee() {
+        return undoEmployee;
     }
 
-    public void setUndo(Stack<ArrayList<Employee>> undo) {
-        this.undo = undo;
+    public void setUndoEmployee(Stack<ArrayList<Employee>> undoEmployee) {
+        this.undoEmployee = undoEmployee;
     }
 
-    public Stack<ArrayList<Employee>> getRedo() {
-        return redo;
+    public Stack<ArrayList<Employee>> getRedoEmployee() {
+        return redoEmployee;
     }
 
-    public void setRedo(Stack<ArrayList<Employee>> redo) {
-        this.redo = redo;
+    public void setRedoEmployee(Stack<ArrayList<Employee>> redoEmployee) {
+        this.redoEmployee = redoEmployee;
+    }
+
+    public Stack<Calendario> getUndoCalendario() {
+        return undoCalendario;
+    }
+
+    public void setUndoCalendario(Stack<Calendario> undoCalendario) {
+        this.undoCalendario = undoCalendario;
+    }
+
+    public Stack<Calendario> getRedoCalendario() {
+        return redoCalendario;
+    }
+
+    public void setRedoCalendario(Stack<Calendario> redoCalendario) {
+        this.redoCalendario = redoCalendario;
     }
 
     public void copyArrayList(ArrayList<Employee> oldEmployee, ArrayList<Employee> newEmployee) {
@@ -47,55 +65,56 @@ public class UndoRedo {
     }
 
     public void clearRedo() {
-        if(redo.size() > 0) {
-            addUndo(redo.peek());
-        }
-        while(!redo.empty()) {
-            redo.pop();
-        }
+        redoEmployee.clear();
+        redoCalendario.clear();
     }
 
-
-    public void addUndo(ArrayList<Employee> employees) {
+    public void addUndo(ArrayList<Employee> employees, Calendario calendario) {
         ArrayList<Employee> auxiliar = new ArrayList<>();
         copyArrayList(auxiliar, employees);
-        undo.push(auxiliar);
+        undoEmployee.push(auxiliar);
+        Calendario auxiliar2 = new Calendario();
+        auxiliar2.copy(calendario, auxiliar2);
+        undoCalendario.push(auxiliar2);
     }
 
     public void addRedo() {
         ArrayList<Employee> auxiliar = new ArrayList<>();
-        copyArrayList(auxiliar, undo.peek());
-        redo.push(auxiliar);
+        copyArrayList(auxiliar, undoEmployee.peek());
+        redoEmployee.push(auxiliar);
+        Calendario auxiliar2 = new Calendario();
+        auxiliar2.copy(undoCalendario.peek(), auxiliar2);
+        redoCalendario.push(auxiliar2);
     }
 
     public void removeUndo() {
-        undo.pop();
+        undoEmployee.pop();
+        undoCalendario.pop();
     }
 
     public void removeRedo() {
-        redo.pop();
+        redoEmployee.pop();
+        redoCalendario.pop();
     }
 
-    public void doUndoRedo(ArrayList<Employee> employees) {
-        int option, lastOption = 0;
+    public void doUndoRedo(ArrayList<Employee> employees, Calendario calendario) {
+        int option;
         System.out.printf("(0) - Encerrar\n(1) - Undo\n(2) - Redo\n");
         option = input.nextInt();
         while(option != 0) {
             if(option == 1) {
-                if (undo.size() > 1) {
+                if (undoEmployee.size() > 1 && undoCalendario.size() > 1) {
                     addRedo();
                     removeUndo();
-                    lastOption = 1;
                     System.out.println("Undo efetuado com sucesso!");
                 } else {
                     System.out.println("Não foi possível realizar o Undo!");
                 }
             }
             else if(option == 2) {
-                if (redo.size() > 1) {
-                    addUndo(redo.peek());
+                if (redoEmployee.size() > 1 && redoCalendario.size() > 1) {
+                    addUndo(redoEmployee.peek(), redoCalendario.peek());
                     removeRedo();
-                    lastOption = 2;
                     System.out.println("Redo efetuado com sucesso!");
                 } else {
                     System.out.println("Não foi possível realizar o Redo!");
@@ -157,7 +176,7 @@ public class UndoRedo {
         System.out.println("Terminou o REDO!");*/
 
         System.out.println("Undo/Redo encerrado!");
-        if(lastOption == 1) copyArrayList(employees, undo.peek());
-        else if(lastOption == 2) copyArrayList(employees, redo.peek());
+        copyArrayList(employees, undoEmployee.peek());
+        calendario.copy(undoCalendario.peek(), calendario);
     }
 }

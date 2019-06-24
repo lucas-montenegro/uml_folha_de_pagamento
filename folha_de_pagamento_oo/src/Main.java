@@ -15,9 +15,6 @@ public class Main {
         UndoRedo undoRedo = new UndoRedo();
         Payroll payroll = new Payroll();
 
-        // initialize undo stack
-        undoRedo.addUndo(employees);
-
         // initialize the payment schedule
         paymentScheduleAux.setDayWeekly(5);
         paymentScheduleAux.setDayBiWeekly(5);
@@ -48,6 +45,9 @@ public class Main {
         calendario.setYear(year);
 
         calendario.initializeCalendary(initialDay);
+
+        // initialize undo stack
+        undoRedo.addUndo(employees, calendario);
 
         System.out.printf("Escolha uma opção:\n(0) - Sair\n(1) - Adicionar um empregado\n(2) - Remover um empregado\n(3) - Lançar cartão de ponto\n(4) - Lancar uma venda\n(5) - Adicionar taxa de serviço\n(6) - Alterar dados\n(7) - Rodar a folha de pagamento\n(8) - Undo/Redo\n(9) - Aderir à uma agenda de pagamento\n(10) - Criar uma nova agenda de pagamento\n");
         int option = input.nextInt();
@@ -85,34 +85,34 @@ public class Main {
                     employees.add(employee);
                 }
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
                 System.out.println("Empregado adicionado com sucesso!");
             }
             else if(option == 2) {
                 employeeAux.removeEmployee(employees);
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
             }
             else if(option == 3) {
                 hourlyAux.timecard(employees);
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
             }
             else if(option == 4) {
                 comissionedAux.addSale(employees);
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
             }
             else if(option == 5) {
                 employeeAux.allEmployees(employees);
                 syndicateAux.addServiceTax(employees);
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
             }
             else if(option == 6) {
                 employeeAux.changeEmployeeData(employees, calendario);
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
             }
             else if(option == 7) {
                 payroll.payroll(employees, calendario);
@@ -121,10 +121,10 @@ public class Main {
                 calendario.nextMonth(calendario.getDay(), calendario.getMonth());
                 calendario.nextYear(calendario.getDay(), calendario.getMonth(), calendario.getYear());
                 undoRedo.clearRedo();
-                undoRedo.addUndo(employees);
+                undoRedo.addUndo(employees, calendario);
             }
             else if(option == 8) {
-                undoRedo.doUndoRedo(employees);
+                undoRedo.doUndoRedo(employees, calendario);
             }
             else if(option == 9) {
                 employeeAux.allEmployees(employees);
