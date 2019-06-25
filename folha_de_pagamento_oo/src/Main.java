@@ -186,8 +186,9 @@ public class Main {
                 paymentScheduleAux.joinPaymentSchedule(employees, paymentSchedule);
             }
             else if(option == 10) {
-                paymentScheduleAux.addPaymentSchedule();
-                paymentSchedule.add(paymentScheduleAux);
+                PaymentSchedule newPaymentSchedule = new PaymentSchedule();
+                newPaymentSchedule.addPaymentSchedule();
+                paymentSchedule.add(newPaymentSchedule);
                 System.out.println("Agenda adicionada com sucesso!");
             }
             else if(option < 0 || option > 10) {

@@ -132,6 +132,9 @@ public class UndoRedo {
                     System.out.println("Não foi possível realizar o Redo!");
                 }
             }
+            else {
+                System.out.println("Digite um valor válido!");
+            }
 
             System.out.printf("(0) - Encerrar\n(1) - Undo\n(2) - Redo\n");
             while(true) {

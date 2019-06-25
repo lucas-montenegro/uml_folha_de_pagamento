@@ -65,10 +65,11 @@ public class Comissioned extends Employee implements Payment{
     }
 
     public void addSale(ArrayList<Employee> employees) {
+        double doubleAux = 0;
         allEmployees(employees);
         Comissioned employee = new Comissioned();
         System.out.println("Digite o id do funcionário que deseja lançar a venda(apenas comissionados):");
-        int idToVerify = input.nextInt();
+        int idToVerify = getExcecao().loadInt();
         int code = 0;
         for(Employee e : employees) {
             if(e.getId() == idToVerify && e instanceof Comissioned) {
@@ -80,7 +81,14 @@ public class Comissioned extends Employee implements Payment{
         if(code == 0) System.out.println("Não é possível lançar a venda!");
         else {
             System.out.println("Digite o valor da venda:");
-            double sale = input.nextDouble();
+            while(true) {
+                doubleAux = getExcecao().loadDouble();
+                if(doubleAux >= 0) {
+                    break;
+                }
+                System.out.println("Digite um valor válido para a venda!");
+            }
+            double sale = doubleAux;
             double commission = employee.getCommission();
             employee.updateActualPayment((sale * commission) / 100);
             System.out.println("Venda lançada com sucesso!");
