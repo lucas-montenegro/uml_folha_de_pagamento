@@ -6,11 +6,15 @@ public class Syndicate {
     private int idSyndicate;
     private double syndicateTax;
     private double serviceTax;
+    private Excecao excecao = new Excecao();
+
     Scanner input = new Scanner(System.in);
 
-    public int getIdSyndicate() {
-        return idSyndicate;
-    }
+    public Excecao getExcecao() { return excecao; }
+
+    public void setExcecao(Excecao excecao) { this.excecao = excecao; }
+
+    public int getIdSyndicate() { return idSyndicate; }
 
     public void setIdSyndicate(int idSyndicate) {
         this.idSyndicate = idSyndicate;
@@ -45,9 +49,10 @@ public class Syndicate {
     }
 
     public void addServiceTax(ArrayList<Employee> employees) {
-        System.out.println("Digite o id do funcionário que deseja lançar a taxa de serviço:");
+        double doubleAux = 0;
         Employee employee = new Employee();
-        int idToVerify = input.nextInt();
+        System.out.println("Digite o id do funcionário que deseja lançar a taxa de serviço:");
+        int idToVerify = excecao.loadInt();
         int code = 0;
         for(Employee e : employees) {
             if(e.getId() == idToVerify) {
@@ -59,7 +64,14 @@ public class Syndicate {
         if(code == 0) System.out.println("Não é possível lançar a taxa de serviço!");
         else {
             System.out.println("Digite a taxa de serviço do funcionário:");
-            double serviceTax = input.nextDouble();
+            while(true) {
+                doubleAux = excecao.loadDouble();
+                if(doubleAux >= 0) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            double serviceTax = doubleAux;
             employee.getSindycate().setServiceTax(serviceTax);
             System.out.println("Taxa de serviço adicionada com sucesso!");
         }

@@ -13,6 +13,7 @@ public class Employee {
     private int scheduleOption;
     private Syndicate sindycate = new Syndicate();
     private PaymentSchedule paymentSchedule = new PaymentSchedule();
+    private Excecao excecao = new Excecao();
     Random generator = new Random();
     Scanner input = new Scanner(System.in);
 
@@ -82,6 +83,10 @@ public class Employee {
 
     public void setPaymentSchedule(PaymentSchedule paymentSchedule) { this.paymentSchedule = paymentSchedule; }
 
+    public Excecao getExcecao() { return excecao; }
+
+    public void setExcecao(Excecao excecao) { this.excecao = excecao; }
+
     public void allEmployees(ArrayList<Employee> employees) {
         for (Employee e : employees) {
             System.out.printf("Nome: %s\n", e.getName());
@@ -92,6 +97,8 @@ public class Employee {
     }
 
     public void addEmployee(ArrayList<Employee> employees, PaymentSchedule paymentSchedule) {
+        int intAux = 0;
+        double doubleAux = 0;
         setPaymentSchedule(paymentSchedule);
 
         System.out.printf("Cadastro da empresa:\n\n");
@@ -118,18 +125,39 @@ public class Employee {
         setId(id);
 
         System.out.println("Digite o seu salário:");
-        double salary = input.nextDouble();
+        while(true) {
+            doubleAux = excecao.loadDouble();
+            if(doubleAux >= 0) {
+                break;
+            }
+            System.out.println("Digite um valor válido para o salário!");
+        }
+        double salary = doubleAux;
         setSalary(salary);
 
         System.out.println("Digite o método de pagamento:");
         System.out.printf("(1) - Cheque pelos correios\n(2) - Cheque em mãos\n(3) - Depósito na conta bancária\n");
-        int paymentMethod = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux > 0 && intAux < 4) {
+                break;
+            }
+            System.out.println("Digite um valor válido para o metódo de pagamento!");
+        }
+        int paymentMethod = intAux;
         setPaymentMethod(paymentMethod);
 
         Syndicate syndicateAux = new Syndicate();
         System.out.printf("Cadastro do Sindicato:\n\n");
         System.out.printf("(0) - Não pertence ao sindicato\n(1) - Pertence ao sindicato\n");
-        int optionSyndicate = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido para a opção de sindicato!");
+        }
+        int optionSyndicate = intAux;
         syndicateAux.setOptionSyndicate(optionSyndicate);
 
         int idSyndicate = generator.nextInt(1000000000);
@@ -148,7 +176,14 @@ public class Employee {
             syndicateAux.setIdSyndicate(idSyndicate);
 
             System.out.println("Digite a taxa do sindicato:");
-            double syndicateTax = input.nextDouble();
+            while(true) {
+                doubleAux = excecao.loadDouble();
+                if(doubleAux >= 0) {
+                    break;
+                }
+                System.out.println("Digite um valor válido para a taxa de sindicato!");
+            }
+            double syndicateTax = doubleAux;
             syndicateAux.setSyndicateTax(syndicateTax);
         } else {
             syndicateAux.setSyndicateTax(0);
@@ -161,7 +196,7 @@ public class Employee {
     public void removeEmployee(ArrayList<Employee> employees) {
         allEmployees(employees);
         System.out.println("Digite o id do funcionário que deseja remover:");
-        int idToRemove = input.nextInt();
+        int idToRemove = excecao.loadInt();
         int code = 0;
         for (Employee e : employees) {
             if (e.getId() == idToRemove) {
@@ -188,8 +223,17 @@ public class Employee {
 
 
     public void changeData(ArrayList<Employee> employees, Employee oldEmployee, Calendario calendario) {
+        int intAux = 0;
+        double doubleAux = 0;
         System.out.println("Digite 1 para modificar o nome e 0 para não modificar:");
-        int option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        int option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("Digite o nome:");
@@ -198,7 +242,14 @@ public class Employee {
         }
 
         System.out.println("Digite 1 para modificar o endereço e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("Digite o endereço:");
@@ -207,20 +258,48 @@ public class Employee {
         }
 
         System.out.println("Digite 1 para modificar o salário e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         if (option == 1) {
             System.out.println("Digite o novo salário:");
-            double salary = input.nextDouble();
+            while(true) {
+                doubleAux = excecao.loadDouble();
+                if(doubleAux >= 0) {
+                    break;
+                }
+                System.out.println("Digite um valor válido para o salário!");
+            }
+            double salary = doubleAux;
             input.nextLine();
             oldEmployee.setSalary(salary);
         }
 
         System.out.println("Digite 1 para modificar o ID e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("Digite o novo ID (número natural válido):");
-            int newId = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux > 0) {
+                    break;
+                }
+                System.out.println("Digite um valor válido para o ID!");
+            }
+            int newId = intAux;
             while (true) {
                 int code = 0;
                 for (Employee e : employees) {
@@ -230,29 +309,57 @@ public class Employee {
                     }
                 }
                 if (code == 0) break;
-                System.out.println("Digite um valor válido!");
-                newId = input.nextInt();
+                System.out.println("ID repetido. Digite um novo ID:");
+                while(true) {
+                    intAux = excecao.loadInt();
+                    if(intAux > 0) {
+                        break;
+                    }
+                    System.out.println("Digite um valor válido para o ID!");
+                }
+                newId = intAux;
             }
             input.nextLine();
             oldEmployee.setId(newId);
         }
 
         System.out.println("Digite 1 para modificar a quantia do próximo contracheque e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("Digite o valor do novo contracheque:");
-            double atualPayment = input.nextDouble();
+            double atualPayment = excecao.loadDouble();
             input.nextLine();
             oldEmployee.setActualPayment(atualPayment);
         }
 
         System.out.println("Digite 1 para modificar a participação no sindicato e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("Digite 1 para participar e 0 para não participar:");
-            int syndicateOption = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux >= 0 && intAux <= 1) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            int syndicateOption = intAux;
             input.nextLine();
             oldEmployee.getSindycate().setOptionSyndicate(syndicateOption);
 
@@ -265,11 +372,25 @@ public class Employee {
 
         if(oldEmployee.getSindycate().getOptionSyndicate() == 1) {
             System.out.println("Digite 1 para modificar a identificação no sindicato e 0 para não modificar:");
-            option = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux >= 0 && intAux <= 1) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            option = intAux;
             input.nextLine();
             if (option == 1) {
                 System.out.println("Digite o ID de sindicato (número natural válido):");
-                int idSyndicate = input.nextInt();
+                while(true) {
+                    intAux = excecao.loadInt();
+                    if(intAux > 0) {
+                        break;
+                    }
+                    System.out.println("Digite um valor válido!");
+                }
+                int idSyndicate = intAux;
                 while (true) {
                     int code = 0;
                     for (Employee e : employees) {
@@ -279,50 +400,113 @@ public class Employee {
                         }
                     }
                     if (code == 0) break;
-                    System.out.println("Digite um valor válido!");
-                    idSyndicate = input.nextInt();
+                    System.out.println("ID de sindicato já existente. Digite um novo ID de sindicato!");
+                    while(true) {
+                        intAux = excecao.loadInt();
+                        if(intAux > 0) {
+                            break;
+                        }
+                        System.out.println("Digite um valor válido!");
+                    }
+                    idSyndicate = intAux;
                 }
                 input.nextLine();
                 oldEmployee.getSindycate().setIdSyndicate(idSyndicate);
             }
 
             System.out.println("Digite 1 para modificar a taxa do sindicato e 0 para não modificar:");
-            option = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux >= 0 && intAux <= 1) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            option = intAux;
             input.nextLine();
             if (option == 1) {
                 System.out.println("Digite a taxa do sindicato:");
-                double syndicateTax = input.nextDouble();
+                while(true) {
+                    doubleAux = excecao.loadDouble();
+                    if(doubleAux >= 0) {
+                        break;
+                    }
+                    System.out.println("Digite um valor válido!");
+                }
+                double syndicateTax = doubleAux;
                 input.nextLine();
                 oldEmployee.getSindycate().setSyndicateTax(syndicateTax);
             }
         }
 
         System.out.println("Digite 1 para modificar a taxa de serviço do sindicato e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("Digite a taxa de serviço do sindicato:");
-            double serviceTax = input.nextDouble();
+            while(true) {
+                doubleAux = excecao.loadDouble();
+                if(doubleAux >= 0) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            double serviceTax = doubleAux;
             input.nextLine();
             oldEmployee.getSindycate().setServiceTax(serviceTax);
         }
 
         System.out.println("Digite 1 para modificar o metódo de pagamento e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.println("(1) Receber o pagamento em cheque pelos correios\n(2) Receber o pagamento em cheque em mãos\n(3) Receber o pagamento na conta bancária");
-            int paymentMethod = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux > 0 && intAux < 4) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            int paymentMethod = intAux;
             input.nextLine();
             oldEmployee.setPaymentMethod(paymentMethod);
         }
 
         System.out.println("Digite 1 para modificar o tipo de empregado e 0 para não modificar:");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 1) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         input.nextLine();
         if (option == 1) {
             System.out.printf("(1) - Assalariado\n(2) - Comissionado\n(3) - Horista\n");
-            int type = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux > 0 && intAux < 4) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            int type = intAux;
             input.nextLine();
             if(type == 1) {
                 Assalaried newEmployee = new Assalaried();
@@ -340,7 +524,14 @@ public class Employee {
                 input.nextLine();
                 if (option == 1) {
                     System.out.println("Digite o valor da comissão:");
-                    double commission = input.nextDouble();
+                    while(true) {
+                        doubleAux = excecao.loadDouble();
+                        if(doubleAux >= 0) {
+                            break;
+                        }
+                        System.out.println("Digite um valor válido!");
+                    }
+                    double commission = doubleAux;
                     input.nextLine();
                     newEmployee.setCommission(commission);
                 }
@@ -358,11 +549,25 @@ public class Employee {
         } else {
             if (oldEmployee instanceof Comissioned) {
                 System.out.println("Digite 1 para modificar a comissão do empregado e 0 para não modificar:");
-                option = input.nextInt();
+                while(true) {
+                    intAux = excecao.loadInt();
+                    if(intAux >= 0 && intAux <= 1) {
+                        break;
+                    }
+                    System.out.println("Digite um valor válido!");
+                }
+                option = intAux;
                 input.nextLine();
                 if (option == 1) {
                     System.out.println("Digite o valor da comissão:");
-                    double commission = input.nextDouble();
+                    while(true) {
+                        doubleAux = excecao.loadDouble();
+                        if(doubleAux >= 0) {
+                            break;
+                        }
+                        System.out.println("Digite um valor válido!");
+                    }
+                    double commission = doubleAux;
                     input.nextLine();
                     ((Comissioned) oldEmployee).setCommission(commission);
                 }
@@ -376,7 +581,7 @@ public class Employee {
     public void changeEmployeeData(ArrayList<Employee> employees, Calendario calendario){
         allEmployees(employees);
         System.out.println("Digite o id do funcionário que deseja alterar os dados:");
-        int idToChange = input.nextInt();
+        int idToChange = excecao.loadInt();
         int code = 0;
         Employee oldEmployee = new Employee();
         for(Employee e : employees) {

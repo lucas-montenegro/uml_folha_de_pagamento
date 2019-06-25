@@ -7,7 +7,12 @@ public class UndoRedo {
     private Stack<ArrayList<Employee>> redoEmployee = new Stack<>();
     private Stack<Calendario> undoCalendario = new Stack<>();
     private Stack<Calendario> redoCalendario = new Stack<>();
+    private Excecao excecao = new Excecao();
     Scanner input = new Scanner(System.in);
+
+    public Excecao getExcecao() { return excecao; }
+
+    public void setExcecao(Excecao excecao) { this.excecao = excecao; }
 
     public Stack<ArrayList<Employee>> getUndoEmployee() {
         return undoEmployee;
@@ -98,9 +103,16 @@ public class UndoRedo {
     }
 
     public void doUndoRedo(ArrayList<Employee> employees, Calendario calendario) {
-        int option;
+        int option, intAux = 0;
         System.out.printf("(0) - Encerrar\n(1) - Undo\n(2) - Redo\n");
-        option = input.nextInt();
+        while(true) {
+            intAux = excecao.loadInt();
+            if(intAux >= 0 && intAux <= 3) {
+                break;
+            }
+            System.out.println("Digite um valor válido!");
+        }
+        option = intAux;
         while(option != 0) {
             if(option == 1) {
                 if (undoEmployee.size() > 1 && undoCalendario.size() > 1) {
@@ -122,7 +134,14 @@ public class UndoRedo {
             }
 
             System.out.printf("(0) - Encerrar\n(1) - Undo\n(2) - Redo\n");
-            option = input.nextInt();
+            while(true) {
+                intAux = excecao.loadInt();
+                if(intAux >= 0 && intAux <= 3) {
+                    break;
+                }
+                System.out.println("Digite um valor válido!");
+            }
+            option = intAux;
         }
 
         /*for(Employee e : undo.peek()) {
