@@ -199,34 +199,6 @@ public class Main {
             option = excecao.loadInt();
         }
 
-        for(Employee e : employees) {
-            if(e instanceof Assalaried) {
-                System.out.println("Type: Assalaried");
-            }
-            else if(e instanceof Comissioned) {
-                System.out.println("Type: Comissioned");
-                System.out.printf("Commission: %.2f\n", ((Comissioned) e).getCommission());
-            }
-            else if(e instanceof Hourly) {
-                System.out.println("Type: Hourly");
-            }
-            System.out.printf("Name: %s\n", e.getName());
-            System.out.printf("Address: %s\n", e.getAddress());
-            System.out.printf("ID: %d\n", e.getId());
-            System.out.printf("Salary: %.2f\n", e.getSalary());
-            System.out.printf("Type of payment: %d\n", e.getPaymentMethod());
-            System.out.printf("Syndicate: %d\n", e.getSindycate().getOptionSyndicate());
-            System.out.printf("Syndicate ID: %d\n", e.getSindycate().getIdSyndicate());
-            System.out.printf("Syndicate tax: %.2f\n", e.getSindycate().getSyndicateTax());
-            System.out.printf("Syndicate service tax: %.2f\n", e.getSindycate().getServiceTax());
-            System.out.printf("-------------------------------\n\n");
-        }
-
-        /*for(int i = 0; i < 12; i++) {
-            int [][] calendary = calendario.getCalendary();
-            System.out.printf("Initial day:%d | Last useful day: %d | Days:%d\n", calendary[i][0], calendary[i][1], calendary[i][2]);
-        }*/
-
         System.out.println("Obrigado por utilizar o sistema de folha de pagamento!");
     }
 }
