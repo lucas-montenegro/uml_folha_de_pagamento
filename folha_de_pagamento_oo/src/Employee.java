@@ -13,6 +13,7 @@ public class Employee {
     private int scheduleOption;
     private Syndicate sindycate = new Syndicate();
     private PaymentSchedule paymentSchedule = new PaymentSchedule();
+    private GenericPayment genericPayment = new GenericPayment();
     private Excecao excecao = new Excecao();
     Random generator = new Random();
     Scanner input = new Scanner(System.in);
@@ -21,59 +22,33 @@ public class Employee {
 
     public void setSindycate(Syndicate sindycate) { this.sindycate = sindycate; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getAddress() {
-        return address;
-    }
+    public String getAddress() { return address; }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    public void setAddress(String address) { this.address = address; }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
-    public double getSalary() {
-        return salary;
-    }
+    public double getSalary() { return salary; }
 
-    public void setSalary(double salary) {
-        this.salary = salary;
-    }
+    public void setSalary(double salary) { this.salary = salary; }
 
     public double getActualPayment() { return actualPayment; }
 
-    public void setActualPayment(double actualPayment) {
-        this.actualPayment = actualPayment;
-    }
+    public void setActualPayment(double actualPayment) { this.actualPayment = actualPayment; }
 
-    public int getPaymentMethod() {
-        return paymentMethod;
-    }
+    public int getPaymentMethod() { return paymentMethod; }
 
-    public void setPaymentMethod(int paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+    public void setPaymentMethod(int paymentMethod) { this.paymentMethod = paymentMethod; }
 
-    public int getDaysToPayment() {
-        return daysToPayment;
-    }
+    public int getDaysToPayment() { return daysToPayment; }
 
-    public void setDaysToPayment(int daysToPayment) {
-        this.daysToPayment = daysToPayment;
-    }
+    public void setDaysToPayment(int daysToPayment) { this.daysToPayment = daysToPayment; }
 
     public int getScheduleOption() { return scheduleOption; }
 
@@ -86,6 +61,10 @@ public class Employee {
     public Excecao getExcecao() { return excecao; }
 
     public void setExcecao(Excecao excecao) { this.excecao = excecao; }
+
+    public GenericPayment getGenericPayment() { return genericPayment; }
+
+    public void setGenericPayment(GenericPayment genericPayment) { this.genericPayment = genericPayment; }
 
     public void allEmployees(ArrayList<Employee> employees) {
         for (Employee e : employees) {
@@ -103,11 +82,11 @@ public class Employee {
 
         System.out.printf("Cadastro da empresa:\n\n");
         System.out.println("Digite o seu nome:");
-        String name = input.nextLine();
+        String name = excecao.loadString();
         setName(name);
 
         System.out.println("Digite o seu endereço:");
-        String address = input.nextLine();
+        String address = excecao.loadString();
         setAddress(address);
 
         int id = generator.nextInt(1000000000);
@@ -236,7 +215,7 @@ public class Employee {
         int option = intAux;
         if (option == 1) {
             System.out.println("Digite o nome:");
-            String name = input.nextLine();
+            String name = excecao.loadString();
             oldEmployee.setName(name);
         }
 
@@ -251,7 +230,7 @@ public class Employee {
         option = intAux;
         if (option == 1) {
             System.out.println("Digite o endereço:");
-            String address = input.nextLine();
+            String address = excecao.loadString();
             oldEmployee.setAddress(address);
         }
 
@@ -494,7 +473,7 @@ public class Employee {
                 Assalaried newEmployee = new Assalaried();
                 copy(oldEmployee, newEmployee);
                 newEmployee.setScheduleOption(1);
-                newEmployee.calculateNextPayment(newEmployee.getPaymentSchedule(), calendario);
+                newEmployee.getGenericPayment().calculateNextPayment(newEmployee.getPaymentSchedule(), calendario, newEmployee);
                 employees.add(newEmployee);
             }
             else if(type == 2) {
@@ -511,14 +490,14 @@ public class Employee {
                 double commission = doubleAux;
                 newEmployee.setCommission(commission);
                 newEmployee.setScheduleOption(2);
-                newEmployee.calculateNextPayment(newEmployee.getPaymentSchedule(), calendario);
+                newEmployee.getGenericPayment().calculateNextPayment(newEmployee.getPaymentSchedule(), calendario, newEmployee);
                 employees.add(newEmployee);
             }
             else if(type == 3) {
                 Hourly newEmployee = new Hourly();
                 copy(oldEmployee, newEmployee);
                 newEmployee.setScheduleOption(3);
-                newEmployee.calculateNextPayment(newEmployee.getPaymentSchedule(), calendario);
+                newEmployee.getGenericPayment().calculateNextPayment(newEmployee.getPaymentSchedule(), calendario, newEmployee);
                 employees.add(newEmployee);
             }
         } else {

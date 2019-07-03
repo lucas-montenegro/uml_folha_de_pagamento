@@ -69,10 +69,18 @@ public class PaymentSchedule {
                             System.out.println("Digite um valor válido!");
                         }
                         option = intAux;
-                        if(option == 1) e.setScheduleOption(1);
-                        else if(option == 2) e.setScheduleOption(2);
-                        else if(option == 3) e.setScheduleOption(3);
-                        code = 0;
+                        if(option == 1) {
+                            e.setScheduleOption(1);
+                            code = 1;
+                        }
+                        else if(option == 2){
+                            e.setScheduleOption(2);
+                            code = 1;
+                        }
+                        else if(option == 3) {
+                            e.setScheduleOption(3);
+                            code = 1;
+                        }
                         break;
                     }
                 }

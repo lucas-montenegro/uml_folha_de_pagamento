@@ -10,9 +10,7 @@ public class Calendario {
         return initialDay;
     }
 
-    public void setInitialDay(int initialDay) {
-        this.initialDay = initialDay;
-    }
+    public void setInitialDay(int initialDay) { this.initialDay = initialDay; }
 
     public int getDayOfWeek() {
         return dayOfWeek;
@@ -26,9 +24,7 @@ public class Calendario {
         return day;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
+    public void setDay(int day) { this.day = day; }
 
     public int getMonth() {
         return month;

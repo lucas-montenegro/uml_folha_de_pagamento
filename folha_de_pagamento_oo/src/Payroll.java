@@ -16,15 +16,15 @@ public class Payroll {
 
         if(employee instanceof Assalaried) {
             employee.setActualPayment(employee.getSalary());
-            ((Assalaried) employee).calculateNextPayment(employee.getPaymentSchedule(), calendario);
+            ((Assalaried) employee).getGenericPayment().calculateNextPayment(employee.getPaymentSchedule(), calendario, employee);
         }
         else if(employee instanceof Comissioned) {
             employee.setActualPayment(employee.getSalary() / 2);
-            ((Comissioned) employee).calculateNextPayment(employee.getPaymentSchedule(), calendario);
+            ((Comissioned) employee).getGenericPayment().calculateNextPayment(employee.getPaymentSchedule(), calendario, employee);
         }
         else if(employee instanceof Hourly) {
             employee.setActualPayment(0);
-            ((Hourly) employee).calculateNextPayment(employee.getPaymentSchedule(), calendario);
+            ((Hourly) employee).getGenericPayment().calculateNextPayment(employee.getPaymentSchedule(), calendario, employee);
         }
         System.out.println("----------------------------------");
         System.out.printf("Foi pago %.2f\n", actualPayment);

@@ -110,7 +110,7 @@ public class Main {
                     employee.addEmployee(employees, paymentSchedule.get(0));
                     employee.setActualPayment(employee.getSalary());
                     employee.setScheduleOption(1);
-                    employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
+                    employee.getGenericPayment().calculateNextPayment(employee.getPaymentSchedule(), calendario, employee);
                     employees.add(employee);
                 }
                 else if(type == 2) {
@@ -128,7 +128,7 @@ public class Main {
                     }
                     double commission = doubleAux;
                     employee.setCommission(commission);
-                    employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
+                    employee.getGenericPayment().calculateNextPayment(employee.getPaymentSchedule(), calendario, employee);
                     employees.add(employee);
                 }
                 else if(type == 3) {
@@ -136,7 +136,7 @@ public class Main {
                     employee.addEmployee(employees, paymentSchedule.get(0));
                     employee.setActualPayment(0);
                     employee.setScheduleOption(3);
-                    employee.calculateNextPayment(employee.getPaymentSchedule(), calendario);
+                    employee.getGenericPayment().calculateNextPayment(employee.getPaymentSchedule(), calendario, employee);
                     employees.add(employee);
                 }
                 undoRedo.clearRedo();
