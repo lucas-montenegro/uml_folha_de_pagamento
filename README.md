@@ -1,4 +1,3 @@
-# folha_de_pagamento_OO
 <h1>Projeto de folha de pagamento</h1>
 -A classe main é o menu em que o usuário poderá escolher as opções.<br>
 -Ao modificar um tipo de funcionário, a quantidade de dias para o pagamento será recalculado.<br>
